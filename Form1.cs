@@ -59,27 +59,28 @@ namespace Battle
 
         private void start_Click(object sender, EventArgs e)
         {
-            var playerIndex = dataGridView1.CurrentRow.Index;
+            int playerIndex;
+            try
+            {
+                playerIndex = dataGridView1.CurrentRow.Index;
+            }
+            catch (NullReferenceException r)
+            {
+                MessageBox.Show("Герой не выбран", " ", MessageBoxButtons.OK);
+                return;
+            }
             var compIndex = new Random().Next(dataGridView1.Rows.Count);
             
             while(compIndex==playerIndex) compIndex = new Random().Next(dataGridView1.Rows.Count);
             
             var playerStr = (from DataGridViewCell obj in dataGridView1.CurrentRow.Cells
                                         select obj.Value.ToString()).ToList();
-            var line = "";
-            foreach (var str in playerStr)
-            {
-                line += str + ",";
-            }
+            var line = playerStr.Aggregate("", (current, str) => current + (str + ","));
             var playerHero = GetHeroFromString(line);
-            line = "";
             var compStr = (from DataGridViewCell obj in dataGridView1.Rows[compIndex].Cells
                 select obj.Value.ToString()).ToList();
 
-            foreach (var str in compStr)
-            {
-                line += str + ",";
-            }
+            line = compStr.Aggregate("", (current, str) => current + (str + ","));
             var compHero = GetHeroFromString(line);
             new Game(playerHero, compHero).Show();
             Hide();
@@ -89,6 +90,11 @@ namespace Battle
         {
             var reader = new StreamReader(@"../save.txt");
             var stats = reader.ReadLine().Split(',');
+            if (stats.Length == 0)
+            {
+                MessageBox.Show("Нет сохранения", " ", MessageBoxButtons.OK);
+                return;
+            }
             var name = stats[0];
             var isAgil = Convert.ToInt32(stats[1]) == 1;
             var streng = Convert.ToInt32(stats[2]);

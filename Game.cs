@@ -27,7 +27,7 @@ namespace Battle
         private void UpdateLabels()
         {
             player_health.Text = $@"Player health: {playerHero.currentHealth}";
-            comp_health.Text = $@"Player health: {compHero.currentHealth}";
+            comp_health.Text = $@"Comp health: {compHero.currentHealth}";
         }
 
         private void run_Click(object sender, EventArgs e)
@@ -170,6 +170,7 @@ namespace Battle
             writer.WriteLine(playerHero.ToString());
             writer.WriteLine(compHero.ToString());
             writer.Close();
+            Close();
         }
     }
 }

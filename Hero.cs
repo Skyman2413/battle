@@ -25,7 +25,7 @@ namespace Battle
             this.regen = regen;
 
             baseHealth = strenght * 30;
-            currentHealth = baseDamage;
+            currentHealth = baseHealth;
         }
         public Hero(string name, bool isAgil, int strenght, int agility, int armor,  int baseDamage, int regen, double currentHealth)
         {
@@ -68,7 +68,13 @@ namespace Battle
 
         public override string ToString()
         {
-            return name + "," + isAgil + "," + 
+            int a;
+            if (isAgil) a = 1;
+            else
+            {
+                a = 0;
+            }
+            return name + "," + a + "," + 
                    strenght + "," + agility + "," + 
                    armor + "," + baseDamage + "," + 
                    regen +"," + currentHealth;
