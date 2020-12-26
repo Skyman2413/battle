@@ -117,5 +117,59 @@ namespace Battle
             new Game(playerHero, compHero).Show();
             Hide();
         }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var s = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+            switch (e.ColumnIndex)
+            {
+                case 0 : if (s.Length == 0 || s == null) {
+                    MessageBox.Show("колонка не может быть пустой");
+                    dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                    }         
+                    break;
+                    
+                case 1:
+                    try
+                    {
+                        var a = Convert.ToInt32(s);
+                        if (a != 0 && a != 1)
+                        {
+                            MessageBox.Show("Неверный  аттрибут", " ", MessageBoxButtons.OK);
+                            dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Неверный  аттрибут", " ", MessageBoxButtons.OK);
+                        dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                    }
+
+                    break;
+                default:  
+                    if (s.Length == 0 || s == null)
+                    {
+                        MessageBox.Show("колонка не может быть пустой");
+                        dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                    }
+                    try
+                    {
+                        var a = Convert.ToInt32(s);
+                        if (a <= 0 || a > 1000)
+                        {
+                            MessageBox.Show("хар-ка может быть в пределах от 0 до 1000", " ", MessageBoxButtons.OK);
+                            dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("хар-ка может быть в пределах от 0 до 1000", " ", MessageBoxButtons.OK);
+                        dataGridView1[e.ColumnIndex, e.RowIndex].Value = "";
+                    }
+                    
+
+                    break;
+            }
+        }
     }
 }
